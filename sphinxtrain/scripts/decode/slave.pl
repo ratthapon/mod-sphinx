@@ -212,6 +212,11 @@ sub align_hyp {
 	localtime(),
 	$ST::CFG_NOTE]);                                       
 	close $fh;       
+	open $fh, ">:encoding(utf8)", "$ST::CFG_BASE_DIR/acc.txt" or die "acc.txt: $!"; 
+	print $fh sprintf("%d\n%d\n%d\n%d",
+		$sent_err, $sent_total,
+		$word_total * $wer / 100, $word_total);
+	close $fh;
 
     HTML_Print("<p class='result'>", FormatURL("$outfile", "Log File"), "</p>");
   } elsif ($align =~ m/sclite/i) {
